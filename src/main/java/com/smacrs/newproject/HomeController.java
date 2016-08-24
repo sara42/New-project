@@ -3,14 +3,12 @@ package com.smacrs.newproject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 //import com.smacrs.testproject.db.UserModel;
@@ -36,19 +34,19 @@ public class HomeController {
 	@PersistenceContext
 	private EntityManager em;
 
+	@ResponseBody
 	@Transactional
-	
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public @ResponseBody String greetingSubmit(@ModelAttribute("UserName") String UserName, @ModelAttribute("UserEmail") String Email,
-			@ModelAttribute("UserAdress") String Adress, @ModelAttribute("UserAge") String Age,
-			@ModelAttribute("UserSalary") String Salary) {
+	@RequestMapping(value = "/signup", method = { RequestMethod.POST })
+	public String greetingSubmit(@RequestParam("UserName") String UserName, @RequestParam("UserEmail") String Email,
+			@RequestParam("UserAdress") String Adress, @RequestParam("UserAge") int Age,
+			@RequestParam("UserSalary") int Salary) {
 
 		UserModel user = new UserModel();
-		// user.setUserEmail(Email);
-		// user.setUserAdress(Adress);
-		// user.setUserAge(Age);
+		user.setUserEmail(Email);
+		user.setUserAdress(Adress);
+		user.setUserAge(Age);
 		user.setUserName(UserName);
-		// user.setUserSalary(Salary);
+		user.setUserSalary(Salary);
 
 		System.out.println(user.getUserAdress());
 		System.out.println(user.getUserAge());
